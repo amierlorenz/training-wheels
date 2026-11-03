@@ -1,0 +1,12 @@
+{
+  "name": "training-wheels",
+  "description": "Coach someone who has never coded through building their own first app, handing them more of the code level by level.",
+  "author": {
+    "name": "Amier",
+    "url": "https://github.com/amierlorenz"
+  },
+  "repository": "https://github.com/amierlorenz/training-wheels",
+  "keywords": ["learning", "beginners", "first-app"],
+  "license": "MIT",
+  "dependencies": [{ "name": "learning-core", "version": "^1.0.0" }]
+}
