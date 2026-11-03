@@ -75,9 +75,9 @@ test('a linked app folder shows the band with a start button, on terminal and de
   for (const surface of ['terminal', 'desktop'] as const) {
     const ui = await $.ui.mount({ ...BAND, surface })
     expect(await ui.find({ type: 'Text', text: 'Outfit Picker' })).toBeDefined()
-    expect(await ui.find({ type: 'Text', text: 'Level 1 · The Boss' })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /Level 1 · The Boss/ })).toBeDefined()
     expect(await ui.find({ type: 'Text', text: /2 wins/ })).toBeDefined()
-    expect(await ui.find({ type: 'Text', text: /Next: Make the "Cold" button/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /Make the "Cold" button/ })).toBeDefined()
     expect(await ui.find({ key: 'try' })).toBeUndefined()
     await ui.unmount()
   }

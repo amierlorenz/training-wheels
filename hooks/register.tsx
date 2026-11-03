@@ -65,10 +65,14 @@ export const register: Register = on => {
     const { Box, Button, Text } = $.ui.resolve(e)
     const started = await read($, isStarted)
 
+    // Desktop buttons are taller than a text row: without a gap they overlap the line above.
+    const isDesktop = e.surface === 'desktop'
+
     const buttons = started ? (
-      <Box gap={2}>
-        <Button key="try" plain label="I'll try it" onPress={() => say($, "I'll try this one myself.")} />
-        <Button key="you" plain label="You do this one" onPress={() => say($, 'Can you do this one for me?')} />
+      <Box gap={1} alignItems="center">
+        <Button key="try" variant="primary" label="I'll try it" onPress={() => say($, "I'll try this one myself.")} />
+        <Button key="you" variant="secondary" label="You do this one" onPress={() => say($, 'Can you do this one for me?')} />
+        <Box flexGrow={1} />
         <Button key="trophies" plain label="Trophies" onPress={() => say($, 'Show me my trophy page.')} />
         <Button key="ready" plain label="Am I ready?" onPress={() => say($, 'Am I ready for the next level?')} />
         <Button key="done" plain label="Done for today" onPress={() => say($, "Let's stop here for today.")} />
@@ -80,15 +84,20 @@ export const register: Register = on => {
     )
 
     const mine = (
-      <Box flexDirection="column" width={e.props.bodyColumns}>
-        <Text wrap="truncate-end">
-          <Text bold>{now.app}</Text>
-          <Text dimColor> · </Text>
-          <Text color="cyan">{levelLabel(now.level)}</Text>
-          <Text dimColor> · </Text>
-          <Text color="yellow">🏆 {now.wins} {now.wins === 1 ? 'win' : 'wins'}</Text>
-        </Text>
-        {now.next && <Text dimColor wrap="truncate-end">Next: {now.next}</Text>}
+      <Box flexDirection="column" gap={isDesktop ? 1 : 0} width={e.props.bodyColumns}>
+        <Box justifyContent="space-between">
+          <Text wrap="truncate-end">
+            <Text bold>{now.app}</Text>
+            <Text dimColor>  ·  {levelLabel(now.level)}</Text>
+          </Text>
+          <Text>🏆 {now.wins} {now.wins === 1 ? 'win' : 'wins'}</Text>
+        </Box>
+        {now.next && (
+          <Text wrap="truncate-end">
+            <Text dimColor>Next  </Text>
+            {now.next}
+          </Text>
+        )}
         {buttons}
       </Box>
     )
